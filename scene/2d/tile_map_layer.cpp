@@ -1234,6 +1234,11 @@ void TileMapLayer::_scenes_update(bool p_force_cleanup) {
 	} else {
 		if (_scenes_was_cleaned_up || dirty.flags[DIRTY_FLAGS_TILE_SET] || dirty.flags[DIRTY_FLAGS_LAYER_IN_TREE]) {
 			// Update all cells.
+			for (int i = 0; i < get_child_count(); i++) {
+				Node *node = get_child(i);
+				remove_child(node);
+				node->queue_free();
+			}
 			for (KeyValue<Vector2i, CellData> &kv : tile_map_layer_data) {
 				_scenes_update_cell(kv.value);
 			}
