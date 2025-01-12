@@ -1234,11 +1234,6 @@ void TileMapLayer::_scenes_update(bool p_force_cleanup) {
 	} else {
 		if (_scenes_was_cleaned_up || dirty.flags[DIRTY_FLAGS_TILE_SET] || dirty.flags[DIRTY_FLAGS_LAYER_IN_TREE]) {
 			// Update all cells.
-			for (int i = 0; i < get_child_count(); i++) {
-				Node *node = get_child(i);
-				remove_child(node);
-				node->queue_free();
-			}
 			for (KeyValue<Vector2i, CellData> &kv : tile_map_layer_data) {
 				_scenes_update_cell(kv.value);
 			}
@@ -1266,6 +1261,7 @@ void TileMapLayer::_scenes_clear_cell(CellData &r_cell_data) {
 		node = get_node_or_null(r_cell_data.scene);
 	}
 	if (node) {
+		remove_child(node);
 		node->queue_free();
 	}
 	r_cell_data.scene = "";
@@ -1766,6 +1762,15 @@ void TileMapLayer::_physics_interpolated_changed() {
 
 void TileMapLayer::_notification(int p_what) {
 	switch (p_what) {
+		case NOTIFICATION_PARENTED: {
+			print_line("PARENTED");
+			for (KeyValue<Vector2i, CellData> &kv : tile_map_layer_data) {
+				print_line("Scene name: ");
+				print_line(kv.value.scene);
+				_scenes_clear_cell(kv.value);
+			}
+			break;
+		}
 		case NOTIFICATION_POSTINITIALIZE: {
 			connect(SNAME("renamed"), callable_mp(this, &TileMapLayer::_renamed));
 			break;
