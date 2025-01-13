@@ -647,7 +647,7 @@ public:
 	void set_process_thread_messages(BitField<ProcessThreadMessages> p_flags);
 	BitField<ProcessThreadMessages> get_process_thread_messages() const;
 
-	Node *duplicate(int p_flags = DUPLICATE_GROUPS | DUPLICATE_SIGNALS | DUPLICATE_SCRIPTS) const;
+	virtual Node *duplicate(int p_flags = DUPLICATE_GROUPS | DUPLICATE_SIGNALS | DUPLICATE_SCRIPTS) const;
 #ifdef TOOLS_ENABLED
 	Node *duplicate_from_editor(HashMap<const Node *, Node *> &r_duplimap) const;
 	Node *duplicate_from_editor(HashMap<const Node *, Node *> &r_duplimap, const HashMap<Ref<Resource>, Ref<Resource>> &p_resource_remap) const;

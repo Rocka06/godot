@@ -1760,17 +1760,15 @@ void TileMapLayer::_physics_interpolated_changed() {
 	}
 }
 
+Node* TileMapLayer::duplicate(int p_flags) const {
+	const_cast<TileMapLayer*>(this)->_internal_update(true);
+	Node* newNode = Node::duplicate(p_flags);
+	const_cast<TileMapLayer*>(this)->_internal_update(false);
+	return newNode;
+}
+
 void TileMapLayer::_notification(int p_what) {
 	switch (p_what) {
-		case NOTIFICATION_PARENTED: {
-			print_line("PARENTED");
-			for (KeyValue<Vector2i, CellData> &kv : tile_map_layer_data) {
-				print_line("Scene name: ");
-				print_line(kv.value.scene);
-				_scenes_clear_cell(kv.value);
-			}
-			break;
-		}
 		case NOTIFICATION_POSTINITIALIZE: {
 			connect(SNAME("renamed"), callable_mp(this, &TileMapLayer::_renamed));
 			break;

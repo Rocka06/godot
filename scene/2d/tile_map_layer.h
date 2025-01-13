@@ -269,7 +269,7 @@ public:
 
 		DIRTY_FLAGS_MAX,
 	};
-
+	Node* duplicate(int p_flags = DUPLICATE_GROUPS | DUPLICATE_SIGNALS | DUPLICATE_SCRIPTS) const override;
 private:
 	static constexpr float FP_ADJUST = 0.00001;
 
