@@ -64,6 +64,7 @@
 #include "servers/display_server.h"
 #include "servers/navigation_server_3d.h"
 #include "servers/physics_server_2d.h"
+#include "scene/gui/flow_container.h"
 
 constexpr int GODOT4_CONFIG_VERSION = 5;
 
@@ -1423,8 +1424,8 @@ ProjectManager::ProjectManager() {
 				empty_list_message->set_text(vformat("[center][b]%s[/b] %s[/center]", line1, line2));
 				empty_list_placeholder->add_child(empty_list_message);
 
-				HBoxContainer *empty_list_actions = memnew(HBoxContainer);
-				empty_list_actions->set_alignment(BoxContainer::ALIGNMENT_CENTER);
+				HFlowContainer *empty_list_actions = memnew(HFlowContainer);
+				empty_list_actions->set_alignment(FlowContainer::ALIGNMENT_CENTER);
 				empty_list_placeholder->add_child(empty_list_actions);
 
 				empty_list_create_project = memnew(Button);
